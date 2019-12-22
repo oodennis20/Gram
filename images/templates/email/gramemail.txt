@@ -1,0 +1,3 @@
+Hello {{name}}
+
+Welcome to the Gram. Enjoy posting photos and following your best friends.Thank you!
