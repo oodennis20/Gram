@@ -5,7 +5,8 @@ from .models import *
 # Create your views here.
 def home(request):
     images = Image.objects.all()
-    return render(request,"home.html",{"images":images})
+    profiles = Profile.objects.all()
+    return render(request,"home.html",{"images":images,"profiles":profiles})
 
 def search_results(request):
 
