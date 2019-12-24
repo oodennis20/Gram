@@ -7,22 +7,18 @@
 <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 <div class="container-fluid header-top">
     <div class="col-md-12" style="padding:0px;">
-        <div class="top-menu-logo"><img src="static/img/lion.jpg" class="center-block"
-                style="height:40px;margin-top:10px;margin-bottom:10px;">
+        <div class="top-menu-logo"><img src="static/img/lion.jpg" class="center-block" style="height:40px;margin-top:10px;margin-bottom:10px;">
             <div class="menu-buttons">
-                <button class="btn btn-default" type="button" id="upload-but"><i
-                        class="glyphicon glyphicon-upload"></i></button>
-                <button class="btn btn-default" type="button" id="profile-but"><i
-                        class="glyphicon glyphicon-user"></i></button>
+                <button class="btn btn-default" type="button" id="upload-but"><i class="glyphicon glyphicon-upload"></i></button>
+                <button class="btn btn-default" type="button" id="profile-but"><i class="glyphicon glyphicon-user"></i></button>
             </div>
         </div>
     </div>
-
 </div>
 {% for image in images %}
 <div class="card mx-auto" style="max-width:50rem; margin-top:50px;">
     <div class="card-header"><img class="img-circle" src="{{image.profile.profile_photo.url}}" style="height:40px;margin-top:10px;margin-bottom:10px;">
-        <label>{{image.profile.name}}</label>
+        <a href="/accounts/profile/{{user.id}}"><label>{{image.profile.name}}</label></a>
     </div>
     <img src="{{image.insta_image.url}}" class="card-img-top">
     <div class="card-body">
@@ -32,7 +28,6 @@
             <p><strong>{{image.profile.name}} </strong>{{image.caption}}</p>
         </div>
     </div>
-</div>
 {%endfor%}
 </div>
 
