@@ -4,12 +4,14 @@ from tinymce.models import HTMLField
 # Create your models here.
 class Profile(models.Model):
     profile_photo= models.ImageField(upload_to='snap/')
-    bio= HTMLField()
+    bio= models.CharField(max_length=240)
     name = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def all_profiles(self):
-        return Profile.objects.all()
-
+    @classmethod
+    def my_profile(cls,id):
+        profile= cls.objects.filter(id=id)
+        return profile
+        
 class Image(models.Model):
     insta_image = models.ImageField(upload_to='snap/')
     caption = models.CharField(max_length=70)
