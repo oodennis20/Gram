@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class InstaConfig(AppConfig):
-    name = 'insta'
+class ImagesConfig(AppConfig):
+    name = 'images'

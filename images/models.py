@@ -7,8 +7,8 @@ class Profile(models.Model):
     bio= models.CharField(max_length=240)
     name = models.CharField(max_length=50)
 
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return self.name
 
     def save_profile(self):
         self.save()
@@ -21,7 +21,7 @@ class Profile(models.Model):
     class Meta:
         ordering = ['name']
 
-class Comment(models.Model):
+class Comments(models.Model):
     comment = models.CharField(max_length=70, blank=True)
     profile_id = models.ForeignKey(User,on_delete=models.CASCADE)
     image_id = models.ForeignKey('images.Image',on_delete=models.CASCADE, related_name='images')
@@ -34,7 +34,7 @@ class Image(models.Model):
     caption = models.CharField(max_length=70)
     profile= models.ForeignKey(Profile)
     likes= models.IntegerField(default=0)
-    comment = models.ForeignKey(Comment,on_delete=models.CASCADE, null=True, blank=True)
+    comment = models.ForeignKey(Comments,on_delete=models.CASCADE, null=True, blank=True)
 
     @classmethod
     def all_images(self):
