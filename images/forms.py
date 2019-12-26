@@ -4,14 +4,14 @@ from .models import Image, Profile, Comments
 class NewProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = "__all__"     
+        exclude = ['name']  
 
 class UploadForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = "__all__"     
 
-class AddComment(forms.ModelForm):
+class CommentForm(forms.ModelForm):
     class Meta:
         model= Comments
         fields = "__all__"
