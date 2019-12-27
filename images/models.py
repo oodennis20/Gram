@@ -5,7 +5,7 @@ from tinymce.models import HTMLField
 class Profile(models.Model):
     profile_photo= models.ImageField(upload_to='snap/')
     bio= models.CharField(max_length=240)
-    name = models.CharField(max_length=50)
+    username = models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -18,12 +18,12 @@ class Profile(models.Model):
         profile= cls.objects.filter(id=id)
         return profile
     
-    # class Meta:
-    #     ordering = ['name']
+    class Meta:
+        ordering = ['username']
 
-class Comments(models.Model):
+class Comment(models.Model):
     comment = models.CharField(max_length=70, blank=True)
-    image_id = models.ForeignKey('images.Image',on_delete=models.CASCADE, related_name='images')
+    username = models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.comment
@@ -31,8 +31,10 @@ class Comments(models.Model):
 class Image(models.Model):
     insta_image = models.ImageField(upload_to='snap/')
     caption = models.CharField(max_length=70)
+    like=models.IntegerField(default=0)
     profile= models.ForeignKey(Profile)
-    username = models.ForeignKey(User,on_delete=models.CASCADE)
+    comments = models.ForeignKey(Comment,on_delete=models.CASCADE, null=True, blank=True)
+
     @classmethod
     def all_images(self):
 
@@ -40,7 +42,6 @@ class Image(models.Model):
         
 class Likes(models.Model):
     likes= models.IntegerField (default=0)
-    admirer = models.CharField(max_length=20)
     image_id = models.ForeignKey(Image)
 
         
