@@ -8,13 +8,25 @@ from .forms import *
 def home(request):
     images = Image.objects.all()
     comments = Comment.objects.all()
-    return render(request,"home.html",{"images":images,"comments":comments})
+    
+    current_user = request.user
+    if request.method == 'POST':
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.name = current_user
+            image.save()
+        return redirect('home')
 
+    else:
+        form = CommentForm()
+
+    return render(request,"home.html",{"images":images, "comments":comments,"form": form})
 @login_required
 def profile(request,profile_id):
 
     profile = Profile.objects.get(pk = profile_id)
-    images = Image.objects.filter()
+    images = Image.objects.filter(profile_id=profile).all()
 
     return render(request,"profile.html",{"profile":profile,"images":images})
 
@@ -87,7 +99,7 @@ def add_comment(request):
         form = CommentForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.save(commit=False)
-            image.name = current_user
+            image.user = current_user
             image.save()
         return redirect('home')
 
