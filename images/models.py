@@ -37,9 +37,9 @@ class Image(models.Model):
         images=Image.objects.filter(profile_id=user.id)
 
 class Comment(models.Model):
-    comment = models.CharField(max_length=70, blank=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
-    imagecomment= models.ForeignKey('images.Image',on_delete=models.CASCADE, related_name='image', null=True)
+    poster = models.ForeignKey(User, related_name='comments',null=True)
+    image = models.ForeignKey(Image, related_name='comments',null=True)
+    comment = models.CharField(max_length=200, null=True)
 
     def save_comment(self):
         self.save()
