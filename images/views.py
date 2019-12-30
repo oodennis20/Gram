@@ -9,6 +9,7 @@ def home(request):
     
     images = Image.objects.all()
     comments = Comment.objects.all()
+    profile = Profile.get_profile()
 
     current_user = request.user
     if request.method == 'POST':
@@ -22,7 +23,7 @@ def home(request):
     else:
         form = CommentForm()
     
-    return render(request,"home.html",{"images":images,"comments":comments,"form":form})
+    return render(request,"home.html",{"images":images,"comments":comments,"form":form,"profile":profile})
 
 @login_required
 def profile(request,profile_id):
@@ -45,7 +46,7 @@ def search_results(request):
         return render(request,'search.html',{"message":message,"profiles":profile,"user":current_user,"username":searched_name})
                                              
     else:
-        message = "You haven't searched for any term"
+        message = "You haven't searched for any user"
         return render(request,'search.html',{"message":message})
 
 @login_required(login_url='/account/login/')

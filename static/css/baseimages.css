@@ -1,7 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One|Lobster|Sacramento|Open+Sans|Quicksand|Raleway|Lobster+Two');
-a.navbar-brand{
-  font-family: 'Lobster Two', cursive;
-}
 .form-inline:focus{
   outline: none;
 }
@@ -14,4 +10,15 @@ body {
   z-index: 0;
   background-color: rgba(192, 192, 192, 0.4);
   background-blend-mode: lighten;
+}
+@media only screen and (max-width: 600px) {
+  div.col{
+      display: none;;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .col {
+      width: 100%;
+  }
 }
