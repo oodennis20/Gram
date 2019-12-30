@@ -7,11 +7,9 @@
 <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 <div class="container-fluid header-top">
     <div class="col-md-12" style="padding:0px;">
-        <div class="top-menu-logo"><img src="static/img/lion.jpg" class="center-block"
-                style="height:40px;margin-top:10px;margin-bottom:10px;">
+        <div class="top-menu-logo"><img src="static/img/lion.jpg" class="center-block" style="height:40px;margin-top:10px;margin-bottom:10px;">
             <div class="menu-buttons">
-                <button class="btn btn-default" type="button" id="upload-but"><a href="/upload"><i
-                            class="fas fa-upload"></i></button>
+                <button class="btn btn-default" type="button" id="upload-but"><a href="/upload"><i class="fas fa-upload"></i></button>
                 <button class="btn btn-default" type="button" id="profile-but"><i class="fas fa-user"></i></button>
             </div>
         </div>
@@ -37,7 +35,19 @@
             <p><strong>{{comment.poster}}</strong> {{comment.comment}}</p>
             {% endif %}
             {%endfor%}
-            <p><a href="{% url 'comment' pk=image.pk %}">Add comment</a></p>
+            {{form.media}}
+            <form action="{%url 'comment' pk=image.id%}" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+
+                {% bootstrap_form form%}
+                <input type="submit" class="btn btn-success btn-lg" value="Post">
+            </form>
+
+            {% block scripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+            {% bootstrap_javascript %}
+            {% endblock %}
         </div>
     </div>
 

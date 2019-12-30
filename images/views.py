@@ -7,22 +7,30 @@ from .forms import *
 @login_required(login_url='/accounts/login/')
 def home(request):
     
+    images = Image.objects.all()
+    comments = Comment.objects.all()
+
     current_user = request.user
-    profile = Profile.get_profile()
-    image = Image.get_images()
-    comments = Comment.get_comment()
-    return render(request,'home.html',{"profile":profile,"comments":comments,"current_user":current_user,"images":image})
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = current_user
+            comment .save()
+        return redirect ('home')
+    
+    else:
+        form = CommentForm()
+    
+    return render(request,"home.html",{"images":images,"comments":comments,"form":form})
 
 @login_required
-def profile(request,pk):
+def profile(request,profile_id):
 
-    current_user = request.user
-    image = Image.get_images()
-    profile = Profile.get_profile()
-    comment = Comment.get_comment()
-    user = get_object_or_404(User,pk=pk)
+    profile = Profile.objects.get(pk = profile_id)
+    images = Image.objects.filter(profile_id=profile).all()
 
-    return render(request,"profile.html",{"profile":profile,"images":images,"user":current_user,"comments":comment})
+    return render(request,"profile.html",{"profile":profile,"images":images})
 
 @login_required(login_url='/account/login/')
 def search_results(request):
