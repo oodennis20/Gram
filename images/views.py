@@ -89,7 +89,7 @@ def update_image(request):
     current_user = request.user
     profiles = Profile.get_profile()
     for profile in profiles:
-        if profile.user.id == current_user.id:
+        if profile.user == current_user:
             if request.method == 'POST':
                 form = UploadForm(request.POST,request.FILES)
                 if form.is_valid():
@@ -123,6 +123,7 @@ def add_comment(request,pk):
 @login_required(login_url="/accounts/login/")
 def like(request,operation,pk):
     image = get_object_or_404(Image,pk=pk)
+    
     if operation == 'like':
         image.likes += 1
         image.save()
