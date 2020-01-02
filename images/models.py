@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-# from tinymce.models import HTMLField
+
 # Create your models here.
 class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
@@ -26,7 +26,7 @@ class Image(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE,null=True)
     insta_image = models.ImageField(upload_to='snap/', null=True)
     caption = models.TextField(null=True)
-    likes = models.PositiveIntegerField(default=0)  
+    likes = models.ManyToManyField(User,related_name="likes",blank=True)
 
     @classmethod
     def get_images(cls):

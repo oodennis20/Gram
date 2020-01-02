@@ -3,8 +3,27 @@ from django.http  import HttpResponse,Http404,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
+from django.contrib.auth import login, authenticate
+from django.template.loader import render_to_string
+from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
 # Create your views here.
-@login_required(login_url='/accounts/login/')
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+            mail_subject = 'Welcome to Gram'
+            message = render_to_string('email/gramemail.html')
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(mail_subject, message, to=[to_email])
+            email.send()
+        return redirect('home') 
+    else:
+        form = SignupForm()
+    return render(request, 'signup.html', {'form': form})
+
 def home(request):
     
     images = Image.objects.all()
@@ -121,16 +140,11 @@ def add_comment(request,pk):
     return render(request, 'comment.html', {"user":current_user,"comment_form":form})
 
 @login_required(login_url="/accounts/login/")
-def like(request,operation,pk):
-    image = get_object_or_404(Image,pk=pk)
-    
-    if operation == 'like':
-        image.likes += 1
-        image.save()
-    elif operation =='unlike':
-        image.likes -= 1
-        image.save()
-    return redirect('home')
+def like(request):
+    image = get_object_or_404(Image, id=request.POST.get('image_id'))
+    image.likes.add(request.user)
+    return redirect('h      ome')
+ 
 
 @login_required(login_url='/accounts/login/')
 def all(request, pk):

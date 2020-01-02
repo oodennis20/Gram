@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^comment/(?P<pk>\d+)',views.add_comment, name='comment'),
     url(r'^like/(?P<operation>.+)/(?P<pk>\d+)',views.like, name='like'),    
     url(r'^all/(?P<pk>\d+)', views.all, name='all'),
+    url(r'^signup/$', views.signup, name='signup'),
 ]
     
 if settings.DEBUG:
