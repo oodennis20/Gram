@@ -143,7 +143,7 @@ def add_comment(request,pk):
 def like(request):
     image = get_object_or_404(Image, id=request.POST.get('image_id'))
     image.likes.add(request.user)
-    return redirect('h      ome')
+    return redirect('home')
  
 
 @login_required(login_url='/accounts/login/')

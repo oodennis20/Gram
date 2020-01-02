@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #fff;" style="font-size: 25px">
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #fff;" style="font-size: 25px">
     <div class="container">
       <a class="navbar-brand ml-3" href="{% url 'home' %}" title="Gram Home" style="font-size: 30px"><i class="fab fa-instagram "></i> | 🅖🅡🅐🅜   </a>
   
@@ -23,14 +23,20 @@
         </div>
       </form>
       <ul class="navbar-nav">
+        {% if user.is_authenticated %} 
         <li class="nav-item">
           <a class="nav-link" href="#" title="User">{{user}}</a>
         <li class="nav-item mx-1">
-          <a class="nav-link" href="/accounts/profile/{{user.id}}" title="profile"><i class="far fa-user-circle fa-2x"></i></i></a>
+          <a class="nav-link" href="/accounts/profile/" title="profile"><i class="far fa-user-circle fa-2x"></i></i></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/logout" title="Logout"><i class="fas fa-sign-out-alt fa-2x"></i></i></a>
         </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="btn btn-outline-primary btn-sm" href="/accounts/login/">Sign In</a> 
+        </li>
+        {% endif %} 
       </ul>
     </div>
       

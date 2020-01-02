@@ -6,11 +6,6 @@
 <br>
 <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 <div class="container-fluid">
-    {% if profile.profile_photo.url != 0 %}
-    <p><a href="{% url 'add_profile' %}" class="btn btn-info">  create a profile</a></p>
-    <p><a href="{% url 'upload' %}" class="btn btn-info">  upload photo</a>
-    </p>
-    {% endif %}
     <div class="row">
         <div class="col-1"></div>
         <div class="col-9" style="max-width:40rem; margin-top:20px;">
@@ -18,19 +13,19 @@
 
             <div class="card mr-0" style="max-width:40rem; margin-top:20px;">
                 <div class="card-header"><img class="img-fluid rounded-circle" src="{{image.profile.profile_photo.url}}" style="height:40px;margin-top:5px;margin-bottom:5px;">
-                    <a href="/accounts/profile/{{user.id}}">
+                    <a href="/accounts/profile/{{image.id}}">
                     <label>{{image.posted_by}}</label></a>
                 </div>
                 <img src="{{image.insta_image.url}}" class="card-img-top">
                 <div class="card-body">
                     <div class="header">
-                        <a id="like" href="{% url 'like' operation='like' pk=image.id%}"><i class="far fa-heart" style="margin-right:10px;color:black;"></i></a>
-                        <a href="#" style="color:black;"><i class="far fa-comment"></i></a>
+                        <a id="like" href="{% url 'like' %}"><i class="far fa-heart" style="margin-right:10px;color:black;"></i></a>
+                        <a href="/comment/{{image.id}}" style="color:black;"><i class="far fa-comment"></i></a>
 
                     </div>
-                    <div class="more-section">
+                    <div class="like-section">
                         {% if image.likes >=1 %}
-                        <label>{{image.likes}} LIkes</label>
+                        <label>{{image.likes.count}} LIkes</label>
                         {% endif %}
                         <p><strong>{{image.posted_by}} </strong>{{image.caption}}</p>
                         {% for comment in comments %}
@@ -40,7 +35,7 @@
                         {%endfor%}
                         {{form.media}}
 
-                        <form action="{%url 'comment' pk=image.id%}" method="post" enctype="multipart/form-data">
+                        <form action="{%url 'comment' pk=image.id%}" method="post" enctype="multipart/form-data" id="sema">
                             {%csrf_token%}
 
                             {% bootstrap_form form%}
