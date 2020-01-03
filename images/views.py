@@ -3,6 +3,7 @@ from django.http  import HttpResponse,Http404,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
+from django.contrib.auth import logout
 from django.contrib.auth import login, authenticate
 from django.template.loader import render_to_string
 from django.contrib.auth.models import User
@@ -44,13 +45,25 @@ def home(request):
     
     return render(request,"home.html",{"images":images,"comments":comments,"form":form,"profile":profile})
 
+@login_required(login_url="/accounts/login/")
+def logout_request(request):
+    '''
+    view function renders home page once logout
+    '''
+    logout(request)
+    return redirect('home')
+
 @login_required
-def profile(request,profile_id):
+def profile(request,pk):
 
-    profile = Profile.objects.get(pk = profile_id)
-    images = Image.objects.filter(profile_id=profile).all()
+    profile = Profile.objects.get(pk = pk)
+    images = Image.objects.all().filter(posted_by_id=pk)
+    content = {
+        "profile": profile,
+        'images' : images,
+    }
 
-    return render(request,"profile.html",{"profile":profile,"images":images})
+    return render(request, 'profile.html',content)
 
 @login_required(login_url='/account/login/')
 def search_results(request):
@@ -86,7 +99,6 @@ def get_image_by_id(request,image_id):
         form = CommentForm()
 
     return render(request,"image.html", {"image":image,"comment":comment,"form": form})
-
 
 @login_required(login_url='/accounts/login/')
 def add_profile(request):
@@ -145,7 +157,6 @@ def like(request):
     image.likes.add(request.user)
     return redirect('home')
  
-
 @login_required(login_url='/accounts/login/')
 def all(request, pk):
     profile = Profile.objects.get(pk=pk)
@@ -155,3 +166,13 @@ def all(request, pk):
         'images': images,
     }
     return render(request, 'all.html', content)
+    
+@login_required(login_url='/accounts/login/')
+def follow(request,operation,id):
+    current_user=User.objects.get(id=id)
+    if operation=='follow':
+        Follow.follow(request.user,current_user)
+        return redirect('home')
+    elif operation=='unfollow':
+        Follow.unfollow(request.user,current_user)
+        return redirect('home')

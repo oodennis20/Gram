@@ -5,8 +5,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^$', views.home,name='home'),
-    url(r'^accounts/profile/(\d+)', views.profile, name='add_profile'),
-    url(r'^profile/(\d+)', views.profile, name='profile'),
+    url(r'^logout/$',views.logout_request,name="logout"),
+    url(r'^accounts/profile/', views.add_profile, name='add_profile'),
+    url(r'^profile/(?P<pk>\d+)', views.profile, name='profile'),
     url(r'^search/', views.search_results, name='search_results'),
     url(r'^image/(\d+)',views.get_image_by_id,name ='image'),
     url(r'^new/profile$', views.add_profile, name='add_profile'),
@@ -16,6 +17,7 @@ urlpatterns = [
     url(r'^like/$',views.like, name='like'),    
     url(r'^all/(?P<pk>\d+)', views.all, name='all'),
     url(r'^signup/$', views.signup, name='signup'),
+    url(r'^follow/(?P<operation>.+)/(?P<id>\d+)',views.follow,name='follow'),
 ]
     
 if settings.DEBUG:
