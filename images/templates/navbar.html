@@ -33,14 +33,14 @@
           <a class="nav-link" href="{% url 'logout' %}" title="Logout"><i class="fas fa-sign-out-alt fa-2x"></i></i></a>
         </li>
         <li class="nav-item">
-          <a class="btn btn-outline-primary btn-sm" href="{% url 'add_profile' %}">Edit Profile</a>
+          <a class="btn btn-outline-secondary btn-sm" href="{% url 'add_profile' %}">Edit Profile</a>
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="btn btn-outline-primary btn-sm" href="/accounts/login/">Sign In</a> 
+          <a class="btn btn-outline-secondary btn-sm" href="/accounts/login/">Sign In</a> 
         </li>
         <li class="nav-item">
-          <a class="btn btn-outline-primary btn-sm" href="/signup/">Sign Up</a>
+          <a class="btn btn-outline-secondary btn-sm" href="/signup/">Sign Up</a>
         </li>
         {% endif %} 
       </ul>

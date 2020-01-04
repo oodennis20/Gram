@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
-    profile_photo= models.ImageField(upload_to='profiles/', null=True)
+    profile_photo= models.ImageField(upload_to='profiles/',null=True)
     bio= models.CharField(max_length=240, null=True)
     
 
@@ -24,9 +24,9 @@ class Profile(models.Model):
 class Image(models.Model):
     posted_by = models.ForeignKey(User, null=True)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE,null=True)
-    insta_image = models.ImageField(upload_to='snap/', null=True)
+    insta_image = models.ImageField(upload_to='snap/',null=True)
     caption = models.TextField(null=True)
-    likes = models.ManyToManyField(User,related_name="likes",blank=True)
+    likes = models.PositiveIntegerField(default=0)
 
     @classmethod
     def get_images(cls):

@@ -66,8 +66,8 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 # Application definition
 
 INSTALLED_APPS = [
-
     'tinymce',
+    'pyuploadcare.dj',
     'images',
     'bootstrap4',
     'django.contrib.admin',
@@ -107,6 +107,11 @@ TEMPLATES = [
         },
     },
 ]
+
+UPLOADCARE = {
+    'pub_key': 'b3b631fd1c4393d31795',
+    'secret': '787678858a63d855993d',
+}
 
 WSGI_APPLICATION = 'gram.wsgi.application'
 

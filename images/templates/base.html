@@ -17,7 +17,11 @@
   {% bootstrap_css %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/baseimages.css' %}">
   {% endblock %}
-
+  <script>
+    UPLOADCARE_PUBLIC_KEY = '2112191dc3ccfc3d2fac';
+  </script>
+  
+  <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 </head>
 
 <body>
@@ -27,7 +31,7 @@
   {% block scripts %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-  {% bootstrap_javascript %}
+    {% bootstrap_javascript %}
   {% endblock %}
 </body>
 
