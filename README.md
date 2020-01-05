@@ -68,6 +68,5 @@ Admin should:
 
 ## Known Bugs
 * User must add profile before uploading an image or viewing profiles
-* Multiple likes can be done on single image
 
 # [License](License.txt)
