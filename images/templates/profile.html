@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-md-5">
                     {% if profile.profile_photo %}
-                    <img src="{{profile.profile_photo.url}}" alt="profile-photo" class="img-fluid-circle"
+                    <img src="{{profile.profile_photo.cdn_url}}" alt="profile-photo" class="img-fluid-circle"
                         style="border-radius: 50%;height:200px;width: 200px;">
                     {% endif %}
                 </div>
@@ -22,7 +22,7 @@
                         </li>
                         {% if profile.user == user %}
                         <li class="list-inline-item">
-                            <a data-toggle="modal" data-target="#edit" href=""><i class="far fa-edit"></i>Edit Profile</a>
+                            <a data-toggle="modal" data-target="#edit" href="">+ More</a>
                         </li>
                         {% else %}
                         <li class="list-inline-item">
@@ -43,7 +43,7 @@
                     </ul>
                     <p class="font3">{{profile.bio}}</p>
                     {% if profile.user == user %}
-                    <p><a href="{% url 'upload' %}">Add Image</a></p>
+                    <p><a href="{% url 'upload' %}"><i class="far fa-arrow-alt-circle-up" style="color:black"></i>Add Image</a></p>
                     {% endif %}
                 </div>
             </div>
@@ -54,7 +54,7 @@
         <div class="row">
             {% for image in images %}
             <div class="col-md-4">
-                <img src="{{image.insta_image.url}}" alt="Image" style="height:300px;width:300px;">
+                <img src="{{image.insta_image.cdn_url}}" alt="Image" style="height:300px;width:300px;">
             </div>
             {% empty %}
             <div class="col-md-12">
@@ -69,7 +69,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <ul class="list-group">
-                    <li class="list-group-item text-center"><a href="{% url 'add_profile' %}">Edit Profile</a></li>
+                    <li class="list-group-item text-center"><i class="fab fa-instagram "></i> | 🅖🅡🅐🅜  </li>
                     <li class="list-group-item text-center"><a href="/logout/">Log Out</a></li>
                     <li class="list-group-item text-center"><a data-dismiss="modal">Cancel</a></li>
                 </ul>

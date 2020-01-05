@@ -116,6 +116,25 @@ def add_profile(request):
     return render(request, 'new_profile.html', {"form": form})
 
 @login_required(login_url='/accounts/login/')
+def update_profile(request):
+    current_user = request.user
+    if request.method == 'POST':
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user)
+
+        if profile_form.is_valid():
+            profile_form.save()
+        return redirect('home')
+
+    else:
+        profile_form = UpdateProfileForm(instance=request.user)
+
+    content={
+        "profile_form": profile_form
+    }
+        
+    return render(request, 'update_profile.html', content )
+
+@login_required(login_url='/accounts/login/')
 def update_image(request):
     current_user = request.user
     profiles = Profile.get_profile()
@@ -151,16 +170,25 @@ def add_comment(request,pk):
         form = CommentForm()
     return render(request, 'comment.html', {"user":current_user,"comment_form":form})
 
-@login_required(login_url="/accounts/login/")
-def like(request,operation,pk):
-    image = get_object_or_404(Image,pk=pk)
+# @login_required(login_url="/accounts/login/")
+# def like(request,operation,pk):
+#     image = get_object_or_404(Image,pk=pk)
     
-    if operation == 'like':
-        image.likes += 1
-        image.save()
-    elif operation =='unlike':
-        image.likes -= 1
-        image.save()
+#     if operation == 'like':
+#         image.likes += 1
+#         image.save()
+#     elif operation =='unlike':
+#         image.likes -= 1
+#         image.save()
+#     return redirect('home')
+
+@login_required(login_url="/accounts/login/")
+def like(request):
+    '''
+    function that add a user to like field when he/she likes an image
+    '''
+    image=get_object_or_404(Image, id=request.POST.get('image_id'))  
+    image.likes.add(request.user)      
     return redirect('home')
  
 @login_required(login_url='/accounts/login/')
@@ -182,3 +210,4 @@ def follow(request,operation,id):
     elif operation=='unfollow':
         Follow.unfollow(request.user,current_user)
         return redirect('home')
+
