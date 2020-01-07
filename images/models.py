@@ -1,19 +1,30 @@
 from django.db import models
 from django.contrib.auth.models import User
 from pyuploadcare.dj.models import ImageField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 class Profile(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
     profile_photo= ImageField(blank=True,manual_crop='')
     bio= models.CharField(max_length=240, null=True)
     
+
+    @receiver(post_save, sender=User)
+    def create_profile(sender,instance,created,**kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_profile(sender,instance, **kwargs):
+        instance.profile.save()
 
     def save_profile(self):
         self.save()
 
     @classmethod
-    def get_profile(cls):
+    def get_profile(cls):  
         profile= Profile.objects.all()
         return profile
     

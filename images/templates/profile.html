@@ -11,8 +11,9 @@
             <div class="row">
                 <div class="col-md-5">
                     {% if profile.profile_photo %}
-                    <img src="{{profile.profile_photo.cdn_url}}" alt="profile-photo" class="img-fluid-circle"
-                        style="border-radius: 50%;height:200px;width: 200px;">
+                    <img src="{{profile.profile_photo.cdn_url}}" alt="profile-photo" class="img-fluid-circle" style="border-radius: 50%;height:200px;width: 200px;">
+                    {%else%}
+                    <img src="https://clipart.info/images/ccovers/1505918650Platinum-Iphone-X-Transparent-Background.png" style="border-radius: 50%; margin-left: 40%;" class="img-fluid" width="250px" height="250px">
                     {% endif %}
                 </div>
                 <div class="col-md-5 text-left">
@@ -70,6 +71,7 @@
             <div class="modal-body">
                 <ul class="list-group">
                     <li class="list-group-item text-center"><i class="fab fa-instagram "></i> | 🅖🅡🅐🅜  </li>
+                    <li class="list-group-item text-center"><a href="{% url 'updateprofile' %}"><i class="far fa-edit"></i>Edit Profile</a></li>
                     <li class="list-group-item text-center"><a href="/logout/">Log Out</a></li>
                     <li class="list-group-item text-center"><a data-dismiss="modal">Cancel</a></li>
                 </ul>

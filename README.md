@@ -1,5 +1,7 @@
 # 🅖🅡🅐🅜
 
+![Gram](/static/img/jd.png)
+
 ## Built By [Dennis](https://github.com/oodennis20/)
 
 ## Description
@@ -65,8 +67,5 @@ Admin should:
 ## Technologies Used
 * Python3.6
 * Django  framework and postgresql database
-
-## Known Bugs
-* User must add profile before uploading an image or viewing profiles
 
 # [License](License.txt)

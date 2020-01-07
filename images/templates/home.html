@@ -12,10 +12,17 @@
             {% for image in images %}
 
             <div class="card mr-0" style="max-width:40rem; margin-top:20px;">
-                <div class="card-header"><img class="img-fluid-circle" src="{{image.profile.profile_photo.cdn_url}}"
-                        style="border-radius: 50%;height:30px;width: 30px;margin-top:5px;margin-bottom:5px;">
-                   
-                        <label>{{image.posted_by}}</label>
+                <div class="card-header">
+                    {% for profile in profile %}
+                    {% if profile.user == user %}
+                        {% if profile.profile_photo %}
+                        <img class="mb-1" src="{{profile.profile_photo.cdn_url}}" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
+                        {%else%}
+                        <img class="mb-1" src="https://clipart.info/images/ccovers/1505918650Platinum-Iphone-X-Transparent-Background.png" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                    <label>{{image.posted_by}}</label>
                 </div>
                 <img src="{{image.insta_image.cdn_url}}" class="card-img-top">
                 <div class="card-body">
@@ -60,8 +67,11 @@
                 <header style="margin-bottom:30px;margin-top:20px;">
                     {% for profile in profile %}
                     {% if profile.user == user %}
-                    <img class="mb-1" src="{{profile.profile_photo.cdn_url}}" alt=""
-                        style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
+                        {% if profile.profile_photo %}
+                        <img class="mb-1" src="{{profile.profile_photo.cdn_url}}" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
+                        {%else%}
+                        <img class="mb-1" src="https://clipart.info/images/ccovers/1505918650Platinum-Iphone-X-Transparent-Background.png" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
+                        {% endif %}
                     <p style="font-size:16px; align:center;">{{profile.user}}</p>
                     {% endif %}
                     {% endfor %}
@@ -76,8 +86,13 @@
                     {% for profile in profile %}
                     {% if profile.user != user %}
                     <div class="user_stories" style="margin-bottom:15px">
-                        <img src="{{profile.profile_photo.cdn_url}}" alt=""
-                            style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
+
+                        {% if profile.profile_photo %}
+                        <img class="mb-1" src="{{profile.profile_photo.cdn_url}}" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
+                        {%else%}
+                        <img class="mb-1" src="https://clipart.info/images/ccovers/1505918650Platinum-Iphone-X-Transparent-Background.png" alt="" style="height:50px;width:50px; border-radius:50%; float:left; margin-right:15px">
+                        {% endif %}
+
                         <a href="{% url 'all' pk=profile.pk %}  ">
                             <p style="font-size:16px">{{profile.user}}<br>
                                 <a href="/follow/follow/{{profile.user.id}}/"

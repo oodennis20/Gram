@@ -15,11 +15,11 @@ def signup(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.save()
-            mail_subject = 'Welcome to Gram'
-            message = render_to_string('email/gramemail.html')
-            to_email = form.cleaned_data.get('email')
-            email = EmailMessage(mail_subject, message, to=[to_email])
-            email.send()
+            # mail_subject = 'Welcome to Gram'
+            # message = render_to_string('email/gramemail.html')
+            # to_email = form.cleaned_data.get('email')
+            # email = EmailMessage(mail_subject, message, to=[to_email])
+            # email.send()
         return redirect('home') 
     else:
         form = SignupForm()
@@ -119,15 +119,12 @@ def add_profile(request):
 def update_profile(request):
     current_user = request.user
     if request.method == 'POST':
-        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user)
-
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if profile_form.is_valid():
             profile_form.save()
-        return redirect('home')
-
+            return redirect('home')
     else:
-        profile_form = UpdateProfileForm(instance=request.user)
-
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
     content={
         "profile_form": profile_form
     }
@@ -151,7 +148,7 @@ def update_image(request):
             else:
                 form = UploadForm()
             return render(request,'upload.html',{"user":current_user,"form":form})
-
+ 
 @login_required(login_url='/accounts/login/')
 def add_comment(request,pk):
     image = get_object_or_404(Image, pk=pk)
